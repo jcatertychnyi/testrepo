@@ -1,0 +1,91 @@
+# editor
+/nbproject/private/
+/nbproject/
+.project
+.idea
+
+# composer
+#composer.lock
+composer.phar
+/vendor/
+/cms/
+
+# svn
+.svn
+
+# Ignore Mac DS_Store files
+.DS_Store
+._*
+node_modules/
+
+# linux backup files
+*~
+
+# markup
+.sass-cache
+node_modules
+*.map
+.tmp
+*.psd
+
+# wordpress configs and uploads
+/.htaccess
+/.env
+/wp-content/themes/twentyseventeen/
+/wp-content/uploads/
+/wp-content/uploads/*
+/wp-content/cache/
+/wp-content/cache/*
+
+# trusted plugins
+/wp-content/mu-plugins/just-responsive-images/
+/wp-content/mu-plugins/advanced-custom-fields-pro/
+/wp-content/mu-plugins/wordpress-theme-framework/
+
+/wp-content/plugins/just-custom-fields/
+/wp-content/plugins/just-tinymce-styles/
+/wp-content/plugins/wordpress-importer/
+/wp-content/plugins/duplicate-post/
+/wp-content/plugins/regenerate-thumbnails/
+/wp-content/plugins/seo-optimized-images/
+#/wp-content/plugins/wordpress-seo/
+/wp-content/plugins/contact-form-7/
+/wp-content/plugins/wp-mail-smtp/
+/wp-content/plugins/add-to-any/
+/wp-content/plugins/autoptimize/
+/wp-content/plugins/fakerpress/
+/wp-content/plugins/just-image-optimizer/
+/wp-content/plugins/mce-table-buttons/
+/wp-content/plugins/wp-super-cache/
+
+/wp-content/plugins/easy-fancybox/
+/wp-content/plugins/kk-star-ratings/
+/wp-content/plugins/reading-time-wp/
+/wp-content/plugins/taxonomy-terms-order/
+/wp-content/plugins/duracelltomi-google-tag-manager/
+/wp-content/plugins/contact-form-7-mailchimp-extension/
+/wp-content/plugins/send-emails-with-mandrill/
+/wp-content/plugins/wp-seo-keyword-optimizer/
+/wp-content/plugins/easy-table-of-contents/
+/wp-content/plugins/intercom/
+/wp-content/plugins/hotjar/
+
+/wp-content/plugins/better-click-to-tweet/
+/wp-content/plugins/disable-comments/
+/wp-content/plugins/hotjar/
+/wp-content/plugins/flamingo/
+/wp-content/plugins/geoip-detect/
+/wp-content/plugins/reading-position-indicator/
+/wp-content/plugins/wp-crontrol/
+/wp-content/plugins/cookie-law-info/
+
+/wp-content/plugins/intelly-related-posts/
+#/wp-content/plugins/enlighter/
+
+#/wp-content/plugins/cf7-custom-error-messages-mod
+#/wp-content/plugins/contact-form-7-lead-info-with-country_refactor
+#/wp-content/plugins/contact-form-7-pipedrive-integration
+
+composer.lock
+/wp-content/themes/lk-marketing/public/css/
+/wp-content/themes/lk-marketing/public/js/
