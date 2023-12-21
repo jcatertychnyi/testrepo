@@ -1,0 +1,87 @@
+version: "2.0"
+
+projectname: servertest
+
+defaults:
+  instance: &default-instance
+    project:
+      src:
+        env_variables: &default-src-env
+          DB_HOST: host.docker.internal:33068
+          DOTENV_VALID: 1
+          WP_ENV: production
+        build_variables: &default-build-env
+          <<: *default-src-env
+          DB_HOST: '${MYSQL_HOST}:3306'
+    docker_server: &default-docker-server
+      target_server: production-server
+      db:
+        mysql:
+          version: 8
+      vhosts:
+        web: &vhost-web
+          app_service: wp-nginx
+          app_service_port: 8443
+
+        mail: &vhost-mailhog
+          app_service: wp-mailhog
+          app_service_port: 8025
+          app_service_ssl: false
+
+      env_variables:
+        SSHD_ENABLED: 0
+        USER_UID: 111
+        USER_GID: 115
+        PHP_INI_TEMPLATE: production
+      remove_services:
+        - wp-db
+        - wp-nodejs
+      cleanup:
+        build:
+          - configs/nginx-server.conf
+          - docker-compose.yml
+        deploy:
+          exclude:
+            - runtime
+            
+
+instances:
+  test:
+    <<: *default-instance
+    project:
+      src:
+        env_variables: &production-env-vars
+          <<: *default-src-env
+          WP_ENV: production
+          WP_HOME: 'https://server.tst'
+          
+        build_variables:
+          <<: *production-env-vars
+          DB_HOST: '${MYSQL_HOST}:3306'
+          
+    docker_server:
+      <<: *default-docker-server
+      target_server: azcs15
+      vhosts:
+        web:
+          <<: *vhost-web
+          domain_name: server.tst
+          #https: certbot
+          https: selfsigned  
+          fake_robots: no
+          basic_auth: 'no'
+        mail:
+          <<: *vhost-mailhog
+          fake_robots: yes
+          https: selfsigned  
+          basic_auth: 'no'
+          basic_auth_user: lkm
+          basic_auth_password: lkm2023
+          domain_name: mailserver.com
+
+      docker_services_static_ip:
+        network: 10.12.3.0/24
+        services:
+          - wp-nginx: 10.12.3.100
+          - wp-mailhog: 10.12.3.105
+
