@@ -1,0 +1,2 @@
+*/10 * * * * cd /var/www/html; gosu jc wp cron event run  --due-now >> /var/log/cron.log 2>&1
+# Don't remove the last line!

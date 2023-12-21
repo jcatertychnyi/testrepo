@@ -1,0 +1,84 @@
+version: "3.7"
+
+# generic php service options
+x-php-defaults: &php-defaults
+  image: hub.jcdev.net:24000/wp-php8.0-fpm-buster:8.0.25
+  cap_add:
+    - SYS_PTRACE
+  security_opt:
+    - apparmor:unconfined
+  volumes:
+    - ./src:/var/www/html
+    - ./configs/php-ini-${PHP_INI_TEMPLATE}.ini:/usr/local/etc/php/conf.d/zz-force-conf.ini
+    - ./configs/php-fpm.conf:/usr/local/etc/php-fpm.d/zz-www.conf
+    - ./configs/crontab:/usr/local/etc/crontab
+  depends_on:
+    - wp-db
+    - wp-mailhog
+  logging:
+    options:
+      max-size: "5m"
+      max-file: "3"
+
+# generic php service environment vars
+x-php-env-defaults: &php-env-defaults
+  PHP_UID: ${USER_UID}
+  PHP_GID: ${USER_GID}
+  MYSQL_HOST: wp-db
+  MYSQL_DATABASE: ${DB_DATABASE}
+  MYSQL_USER: ${DB_USERNAME}
+  MYSQL_PASSWORD: ${DB_PASSWORD}
+
+# SERVICES
+services:
+  wp-app:
+    <<: *php-defaults
+    environment:
+      <<: *php-env-defaults
+      FOREGROUND_PROCESS: php-fpm
+      CONTAINER_ENABLED: 1
+
+  wp-db:
+    image: mysql:8.0.30
+    ports:
+      - ${HOST_DB_PORT}:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: developer
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./runtime/mysql:/var/lib/mysql
+      - ./configs/my.cnf:/etc/mysql/my.cnf
+
+  wp-nginx:
+    image: nginx:latest
+    ports:
+      - ${HOST_WEB_PORT}:8443
+    depends_on:
+      - wp-app
+      - wp-db
+    volumes:
+      - ./src:/var/www/html
+      - ./configs/nginx-server.conf:/etc/nginx/conf.d/web.conf
+      - ./configs/ssl:/etc/nginx/ssl
+    logging:
+      options:
+        max-size: "50m"
+        max-file: "3"
+
+  wp-nodejs:
+    #image: hub.jcdev.net:24000/nodejs18-npm9-bullseye:18.13.0
+    #image: hub.jcdev.net:24000/node14-npm8-bullseye:1.0.1
+    image: hub.jcdev.net:24000/node16-npm8-bullseye:16.18
+    working_dir: /var/www/html
+    environment:
+      USER_UID: ${USER_UID}
+      USER_GID: ${USER_GID}
+    volumes:
+      - ./src:/var/www/html
+
+  wp-mailhog:
+    image: axllent/mailpit
+    ports:
+      - ${HOST_MAILHOG_PORT}:8025

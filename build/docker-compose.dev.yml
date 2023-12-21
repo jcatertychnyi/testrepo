@@ -1,0 +1,29 @@
+version: "3.7"
+
+services:
+  wp-app:
+    environment:
+      SSHD_ENABLED: ${SSHD_ENABLED}
+      PHP_XDEBUG_ENABLED: ${PHP_XDEBUG_ENABLED}
+      XDEBUG_REMOTE_HOST: ${XDEBUG_REMOTE_HOST}
+      PHP_IDE_CONFIG: ${PHP_IDE_CONFIG}
+    ports:
+      - "${HOST_SSHD_PORT}:22"
+    depends_on:
+      - wp-mailhog
+
+  wp-nodejs:
+    ports:
+      - ${HOST_BROWSER_SYNC}:8080
+      - ${HOST_BROWSER_SYNC_UI}:8000
+    environment:
+      HOST_BROWSER_SYNC: ${HOST_BROWSER_SYNC}
+      HOST_BROWSER_SYNC_UI: ${HOST_BROWSER_SYNC_UI}
+      # enable watch poll mode.
+      CHOKIDAR_USEPOLLING: 1
+      USER_UID: ${USER_UID}
+      USER_GID: ${USER_GID}
+    ulimits:
+      nofile:
+        soft: 10240
+        hard: 10240

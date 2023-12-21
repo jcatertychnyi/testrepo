@@ -1,0 +1,17 @@
+.git/
+*.sql
+runtime/
+src/*.gz
+src/runtime/
+src/wp-content/uploads/*
+src/wp-content/cache/*
+
+#theme javascript sources
+src/wp-content/themes/*/assets
+
+#exclude node modules from any level
+*/node_modules
+*/*/node_modules
+*/*/*/node_modules
+*/*/*/*/node_modules
+*/*/*/*/*/node_modules

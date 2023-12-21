@@ -1,0 +1,21 @@
+# configs and main entry
+.env*
+!.env.example
+/docker-compose.yml
+/docker-compose.override.yml
+src/.git
+
+# phpstorm/netbeans/eclipse project files
+.idea
+nbproject
+.buildpath
+.project
+.settings
+.vscode
+
+# windows/Mac thumbnail cache
+Thumbs.db
+.DS_Store
+
+src/wp-content/themes/lk-marketing/public/css
+src/wp-content/themes/lk-marketing/public/js
