@@ -13,20 +13,15 @@ $conn = new mysqli($servername, $username, $password, $base, $port);
 
 // Check connection
 if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
+  die("<br/> MYSQL Connection failed: " . $conn->connect_error);
 }
-echo "<br/>";
-echo "<br/> MYSQL connected successfully<br/>";
-echo "<br/>";
+echo "<br/> MySQL status: connected<br/>";
 
 $connect="host=".$ini['BIGDB_HOST']." user=".$ini['BIGDB_USERNAME']." password=".$ini['BIGDB_PASSWORD']." dbname=".$ini['BIGDB_DATABASE'];
-//echo ($connect);
 
-$db = pg_connect($connect) or die('Connection failed');
+$db = pg_connect($connect) or die('<br/> Postgress Connection failed');
 
-echo "<br/>";
-echo "<br/> PSQL connected successfully<br/>";
-echo "<br/>";
+echo "<br/>PostgreSQL status: connected<br/>";
 
 
 
