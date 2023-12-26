@@ -1,10 +1,24 @@
 <?php
+$ini = parse_ini_file(".env");
+// print_r($ini);
 
-// Show all information, defaults to INFO_ALL
-phpinfo();
+$servername = $ini['DB_HOST'];
+$username = $ini['DB_USER'];
+$password = $ini['DB_PASSWORD'];
+$base= $ini['DB_NAME'];
+$port= $ini['DB_PORT'];
 
-// Show just the module information.
-// phpinfo(8) yields identical results.
-phpinfo(INFO_MODULES);
+// Create connection
+$conn = new mysqli($servername, $username, $password, $base, $port);
+
+// Check connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+echo "<br/>";
+echo "<br/> MYSQL connected successfully<br/>";
+echo "<br/>";
+
+
 
 ?>
