@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+exit
 # includes
 SCRIPT_PATH=${0%/*}
 source "$SCRIPT_PATH/helpers.sh"

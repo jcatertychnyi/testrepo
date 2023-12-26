@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+exit
 function dotenv_load() {
     if [ -f .env ]; then
       export $(echo $(cat .env | sed 's/#.*//g'| xargs) | envsubst)
